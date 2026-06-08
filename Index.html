@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Paciente - Modo Simulação</title>
+    <style>
+        /* Estilos do Site (CSS) */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #1e1e2f; 
+            color: white; 
+            text-align: center; 
+            margin: 0; 
+            padding: 20px; 
+            transition: background-color 0.5s; 
+        }
+        .container { 
+            max-width: 600px; 
+            margin: auto; 
+            background: #2a2a40; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        }
+        h1 { color: #00d2ff; }
+        .card { 
+            background: #3f3f5a; 
+            margin: 20px 0; 
+            padding: 20px; 
+            border-radius: 10px; 
+            font-size: 1.5em; 
+            transition: all 0.3s;
+        }
+        .valor { 
+            font-size: 2.5em; 
+            font-weight: bold; 
+            color: #00ff88; 
+        }
+        .alerta { 
+            background-color: #ff4c4c !important; 
+            color: white !important; 
+            animation: piscar 1s infinite; 
+            font-weight: bold;
+        }
+        @keyframes piscar { 
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        /* Área de testes (Só aparece no seu PC) */
+        .area-testes {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #555;
+        }
+        button {
+            background-color: #00d2ff;
+            color: #1e1e2f;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover { background-color: #009ac2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏥 Monitor de Sinais Vitais</h1>
+        
+        <div class="card">
+            <div>Frequência Cardíaca</div>
+            <div id="bpm" class="valor">75 BPM</div>
+        </div>
+
+        <div id="mensagem" class="card">
+            ✅ Paciente Estável
+        </div>
+
+        <div class="area-testes">
+            <h3>Painel de Simulação (Para a Banca Avaliadora)</h3>
+            <p>Use os botões abaixo para simular os sensores do ESP32:</p>
+            <button onclick="simularStatus(75, false, false)">Normal</button>
+            <button onclick="simularStatus(110, true, false)">Simular Queda (Acelerômetro)</button>
+            <button onclick="simularStatus(90, false, true)">Simular Botão SOS</button>
+            <button onclick="simularStatus(45, false, false)">Simular Bradicardia (< 50 BPM)</button>
+        </div>
+    </div>
+
+    <script>
+        function simularStatus(novoBpm, temQueda, temSOS) {
+            // Atualiza o valor do BPM na tela
+            document.getElementById('bpm').innerText = novoBpm + " BPM";
+            
+            // Muda a cor do BPM dependendo da frequência
+            let corBpm = "#00ff88"; // Verde normal
+            if (novoBpm > 100 || novoBpm < 50) corBpm = "#ff4c4c"; // Vermelho alerta
+            document.getElementById('bpm').style.color = corBpm;
+
+            // Pega os elementos que vão mudar de cor
+            let corpo = document.body;
+            let msg = document.getElementById('mensagem');
+            
+            // Lógica de Alertas
+            if (temQueda || temSOS) {
+                corpo.style.backgroundColor = "#8b0000"; // Fundo vermelho escuro
+                if (temQueda) msg.innerText = "🚨 ALERTA: QUEDA DETECTADA!";
+                if (temSOS) msg.innerText = "🆘 ALERTA: BOTÃO DE PÂNICO ACIONADO!";
+                msg.className = "card alerta"; // Ativa a animação de piscar
+            } else {
+                corpo.style.backgroundColor = "#1e1e2f"; // Fundo azul escuro normal
+                msg.innerText = "✅ Paciente Estável";
+                msg.className = "card"; // Remove a animação
+            }
+        }
+    </script>
+</body>
+</html>

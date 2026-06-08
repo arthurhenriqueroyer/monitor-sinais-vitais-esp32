@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Médico Avançado - Telemetria ESP32</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Monitor de Sinais Vitais</h1>
+            <div class="subtitle">Sistema Integrado de Telemetria Médica (ESP32)</div>
+        </header>
+        
+        <div id="status-conexao" class="badge-status">Buscando Sinal...</div>
+        
+        <main class="card">
+            <div class="card-label">Frequência Cardíaca Atual</div>
+            <div id="bpm-valor" class="valor">
+                <span class="placeholder">Iniciando Sensores...</span>
+            </div>
+        </main>
+
+        <footer id="mensagem" class="card status-estavel">
+            🔄 Estabelecendo Comunicação...
+        </footer>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
