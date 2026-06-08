@@ -2,30 +2,33 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Painel Médico - Demonstração</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthPulse | Monitoramento IoT</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Monitor de Sinais Vitais</h1>
-        <div id="status-conexao" class="badge-status">Simulação Ativa</div>
-        
-        <main class="card">
-            <div class="card-label">Batimentos</div>
-            <div id="bpm-valor" class="valor">75 <span class="unidade">BPM</span> <span class="coracao">❤️</span></div>
+        <header>
+            <h1>HealthPulse v1.0</h1>
+            <div id="status-tag" class="badge">Conectando...</div>
+        </header>
+
+        <main>
+            <div class="card">
+                <p>Frequência Cardíaca</p>
+                <div id="bpm-valor" class="bpm-display">--</div>
+                <div id="status-msg">Aguardando dados...</div>
+            </div>
+
+            <div class="card" id="painel-simulacao">
+                <small>Modo de Demonstração</small>
+                <div style="margin-top: 10px;">
+                    <button onclick="injectData(75, false, false)">Normal</button>
+                    <button onclick="injectData(110, true, false)">Queda</button>
+                    <button onclick="injectData(90, false, true)">SOS</button>
+                </div>
+            </div>
         </main>
-
-        <footer id="mensagem" class="card status-estavel">
-            ✅ Paciente Estável
-        </footer>
-
-        <section class="card-simulacao">
-            <h3>Painel de Demonstração</h3>
-            <button onclick="injectData(75, false, false)">Normal</button>
-            <button onclick="injectData(110, true, false)">Simular Queda</button>
-            <button onclick="injectData(90, false, true)">Simular SOS</button>
-            <button onclick="injectData(45, false, false)">Simular Crise (Baixo BPM)</button>
-        </section>
     </div>
     <script src="script.js"></script>
 </body>
